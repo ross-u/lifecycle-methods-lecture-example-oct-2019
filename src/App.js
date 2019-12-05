@@ -1,26 +1,38 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Clock from './components/Clock';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    currentTime: 'NOTHING',
+    showClock: true
+  }
+
+  updateTime = () => {
+
+    const currentTime = new Date().toUTCString();
+    this.setState({ currentTime })
+  }
+
+  toggleClock = () => {
+    this.setState({ showClock: !this.state.showClock })
+  }
+
+  render () {
+    return (
+      <div className="App">
+        <button onClick={this.updateTime} >Update Current Time</button>
+        <button onClick={this.toggleClock}>TOGGLE CLOCK</button>
+
+        {
+          this.state.showClock
+            ? <Clock year={2019}  currentTime={ this.state.currentTime }/>
+            : null
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
